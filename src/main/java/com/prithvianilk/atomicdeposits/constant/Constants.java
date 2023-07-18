@@ -1,4 +1,4 @@
-package com.prithvianilk.atomicdeposits;
+package com.prithvianilk.atomicdeposits.constant;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

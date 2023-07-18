@@ -20,6 +20,8 @@ import java.math.BigDecimal;
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class Deposit {
     @Id
+    private String id;
+
     String userId;
 
     BigDecimal amount;

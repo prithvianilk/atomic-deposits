@@ -13,8 +13,8 @@
   - deposits (user_id, amount)
 - APIs:
   - POST /bank_accounts/debit { user_id, debit_amount } 
-  - PUT /deposits { user_id, deposit_amount } 
-  - POST /app/deposit { user_id, deposit_amount }
+  - PUT /deposits/user_id { deposit_amount } 
+  - POST /deposit-gateway/deposit/user_id { deposit_amount }
 - Business logic
   1. Call /deposit API
   2. Debit via /bank_accounts/debit API, then create an outbox table

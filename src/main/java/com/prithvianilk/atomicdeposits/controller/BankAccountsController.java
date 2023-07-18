@@ -2,6 +2,7 @@ package com.prithvianilk.atomicdeposits.controller;
 
 import com.prithvianilk.atomicdeposits.model.BankAccount;
 import com.prithvianilk.atomicdeposits.repository.BankAccountRepository;
+import com.prithvianilk.atomicdeposits.service.DepositsOrchestratorService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -17,6 +18,7 @@ import java.math.BigDecimal;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class BankAccountsController {
     BankAccountRepository bankAccountRepository;
+    DepositsOrchestratorService depositsOrchestratorService;
 
     @GetMapping(path = "/{userId}")
     public ResponseEntity<BankAccount> getBankAccount(@PathVariable String userId) {
@@ -29,5 +31,13 @@ public class BankAccountsController {
     @PostMapping(path = "/{userId}")
     public ResponseEntity<BankAccount> getBankAccount(@PathVariable String userId, @RequestBody BigDecimal amount) {
         return ResponseEntity.ok(bankAccountRepository.save(new BankAccount(userId, amount)));
+    }
+
+    @PostMapping(path = "/deposit/{userId}")
+    public ResponseEntity<?> depositFromBankAccount(@PathVariable String userId, @RequestBody BigDecimal depositAmount) {
+        bankAccountRepository.getByUserId(userId)
+                             .filter(bankAccount -> bankAccount.getAmount().compareTo(depositAmount) > 0)
+                             .ifPresent(bankAccount -> depositsOrchestratorService.depositAmount(bankAccount, depositAmount));
+        return ResponseEntity.ok().build();
     }
 }

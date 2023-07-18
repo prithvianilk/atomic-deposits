@@ -1,6 +1,5 @@
 package com.prithvianilk.atomicdeposits.repository;
 
-import com.prithvianilk.atomicdeposits.model.BankAccount;
 import com.prithvianilk.atomicdeposits.model.Deposit;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
